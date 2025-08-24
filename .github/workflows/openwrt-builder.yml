@@ -35,7 +35,7 @@ jobs:
       contents: write
       packages: write
       repository-projects: write
-      models: write
+      workflows: write
       issues: write
       deployments: write
     steps:
