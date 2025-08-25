@@ -18,7 +18,7 @@ on:
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: openwrt-24.10
+  REPO_BRANCH: openwrt-23.05
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
   DIY_P1_SH: diy-part1.sh
@@ -27,12 +27,17 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  TOKEN: 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
 
 jobs:
   build:
     runs-on: ubuntu-22.04
-
+    permissions:
+      contents: write
+      packages: write
+      repository-projects: write
+      pages: write
+      issues: write
+      deployments: write
     steps:
     - name: Checkout
       uses: actions/checkout@main
@@ -139,7 +144,7 @@ jobs:
       uses: softprops/action-gh-release@master
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
-        GITHUB_TOKEN: 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
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
@@ -158,4 +163,4 @@ jobs:
         keep_latest: 3
         delete_tags: true
       env:
-        GITHUB_TOKEN: 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
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
